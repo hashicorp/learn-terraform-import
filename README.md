@@ -24,7 +24,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     resource "docker_container" "web" {
     }
     ```
-        - Note: The resource name in this configuration does not have to match the other config; that name is internal to terraform.
+        1. Note: The resource name in this configuration does not have to match the other config; that name is internal to terraform.
     1. Run `docker ps` to identify the name of the container you want to import.
         1. Notice that the [docs](https://www.terraform.io/docs/providers/docker/r/container.html) show how to import the container resource, and requires that we know the full image id/sha. In this case, the `docker ps` output shows the short version of the sha, but we can look up the full sha using the name from the output of the `docker ps` command.
     1. Run `terraform import docker_container.web $(docker inspect -f {{.ID}} tutorial)`
