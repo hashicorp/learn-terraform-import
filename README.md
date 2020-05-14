@@ -59,19 +59,19 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     1. Notice that this doesn't match your `provision` configuration. The original configuration relied on the default values for ip/protocol, but we aren't referencing the original configuration - the resource in question could have been created in any other way.
         - You can look at the docs again to see if some values match the default value and leave them out of the configuration.
     1. Add each of those values to your configuration, making sure the values match as shown:
-```
-attach = false
-logs = false
-must_run = true
-start = true
-```
+    ```
+    attach = false
+    logs = false
+    must_run = true
+    start = true
+    ```
     1. Notice that running `terraform plan`, it still shows a change; this is because
-        - FIXME: Why is this the case? It makes sense intuitively, but I don't know the "technical" reason
-        - FIXME: Is this unique to the docker provider, or this particular example? Or is this a common thing people will run into?
-        - FIXME: Is this step necessary, or even useful?
+        1. FIXME: Why is this the case? It makes sense intuitively, but I don't know the "technical" reason
+        1. FIXME: Is this unique to the docker provider, or this particular example? Or is this a common thing people will run into?
+        1. FIXME: Is this step necessary, or even useful?
     1. Run `terraform apply` and confirm the plan
-        - FIXME: Is this always safe, given that it will say the resource will change?
-        - NOTE: I thought `terraform refresh` might make the differences go away, but it doesn't.
+        1. FIXME: Is this always safe, given that it will say the resource will change?
+        1. NOTE: I thought `terraform refresh` might make the differences go away, but it doesn't.
     1. Run `terraform plan` to see that there are now no changes.
     1. Optional: Run `docker ps` and `open http://0.0.0.0:8000` to verify the app still works.
     1. Run `terraform destroy` to destroy the container.
