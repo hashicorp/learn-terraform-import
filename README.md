@@ -48,14 +48,14 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     1. Now run `terraform plan` note that if we were to apply now, the container would be replaced; this is because our configuration still doesn't match our state.
     1. There are a lot of differences! Look for the difference that will force the container to be replaced; this is the one that will represent an actual "material" change to your infrastructure. (`ports { # forces replacement`)
     1. Add a `ports` section to the config matching the left-hand ("current state") values:
-```
-ports {
-    external = 8000
-    internal = 80
-    ip       = "0.0.0.0"
-    protocol = "tcp"
-  }
-```
+    ```
+    ports {
+        external = 8000
+        internal = 80
+        ip       = "0.0.0.0"
+        protocol = "tcp"
+      }
+    ```
     1. Notice that this doesn't match your `provision` configuration. The original configuration relied on the default values for ip/protocol, but we aren't referencing the original configuration - the resource in question could have been created in any other way.
         - You can look at the docs again to see if some values match the default value and leave them out of the configuration.
     1. Add each of those values to your configuration, making sure the values match as shown:
