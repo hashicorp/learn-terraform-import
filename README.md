@@ -37,8 +37,8 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
         1. Note that you can also see the required and optional arguments in the docs
     1. Name is easy; inspect `terraform show` (or in this case `docker ps` shows the name as well: "tutorial")
     1. Use `terraform show` to find the values
-        - Note: You can use `terraform show -json | jq '.values.root_module.resources[] | select(.address == "docker_container.web").values.image'` and similar.
-        - FIXME: ^ Fix ugly jq query?
+        1. Note: You can use `terraform show -json | jq '.values.root_module.resources[] | select(.address == "docker_container.web").values.image'` and similar.
+        1. FIXME: ^ Fix ugly jq query?
     1. Add `name` to the block
     1. image is sort of easy. The value from docker is found in `terraform show` as well.
         1. Sidebar? Notice that it's a `sha:` value. This is how docker stores the image ID internally. This will work, but not as nice as using the image tag or name; remember terraform configuration is meant to be human readable.
