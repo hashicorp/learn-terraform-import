@@ -12,11 +12,13 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
 
 ### Import and orphaned resource
 1. Run docker command to run latest nginx image
+
     ```shell
     $ docker run --name hashicorp-learn --detach --publish 8080:80 nginx:latest
     75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1
     ```
 1. Verify container is running by running `docker ps` or visiting `localhost:8080`.
+
     ```shell
     $ $ docker ps --filter "name=hashicorp-learn"
     CONTAINER ID        IMAGE                                     COMMAND                  CREATED             STATUS              PORTS                     NAMES
@@ -33,8 +35,13 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     **Note:** The resource name in this configuration does not have to match the other config; that name is internal to terraform.
 1. Run `docker ps` to identify the name of the container you want to import.
     
-    Notice that the [docs](https://www.terraform.io/docs/providers/docker/r/container.html) show how to import the container resource, and requires that we know the full image id/sha. In this case, the `docker ps` output shows the short version of the sha, but we can look up the full sha using the name from the output of the `docker ps` command.
-1. Run the following command to import the container into Terraform state. `$(docker inspect -f {{.ID}} hashicorp-learn)` retrieves the container instance's full ID.
+    Notice that the [docs](https://www.terraform.io/docs/providers/docker/r/container.html) show how to import the container resource and requires that we know the full image id/sha. The `docker ps` output shows the short version of the sha. To retrieve the container's full ID, run the following command.
+    
+    ```shell
+    $ docker inspect -f {{.ID}} hashicorp-learn
+    ```
+1. Run the following command to import the container into Terraform state.
+
     ```shell
     $ terraform import docker_container.web $(docker inspect -f {{.ID}} hashicorp-learn)
     docker_container.web: Importing from ID "75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1"...
@@ -48,10 +55,12 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     your Terraform state and will henceforth be managed by Terraform.
     ```
 1. Now the container is in your terraform configuration's state.
+
     ```shell
     $ terraform show
     ```
 1. Run `terraform plan`. Terraform complains about missing arguments (`image`, `name`).
+
     ```shell
     $ terraform plan
 
@@ -118,6 +127,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
 
 ### Change container ports using Terraform
 1. In your `docker.tf` file, change the container's external port from `8080` to `8081`.
+
     ```hcl
     resource "docker_container" "web" {
         ## file truncated
@@ -130,6 +140,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     }
     ```
 1. Apply the change. Remember to confirm the run with a `yes`. This should recreate the container with the new port. Any changes to container port will force a replacement.
+
     ```shell
     $ terraform apply
     docker_container.web: Refreshing state... [id=75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1]
@@ -147,6 +158,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
     ```
 1. Verify the container port has been changed by running `docker ps` or visit `localhost:8081`.
+
     ```shell
     $ docker ps --filter "name=hashicorp-learn"
     CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
@@ -200,11 +212,13 @@ Congrats — you have imported a resource into Terraform, then configured it usi
 
 Destroy the resources you have created in this guide.
 1. Run `terraform destroy` to destroy the container. Remember to confirm your run with a `yes`.
-```shell
-$ terraform destroy
-```
+
+    ```shell
+    $ terraform destroy
+    ```
 1. Run `docker ps` to validate that it was destroyed.
-```shell
-$ docker ps --filter "name=hashicorp-learn"
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-```
+
+    ```shell
+    $ docker ps --filter "name=hashicorp-learn"
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+    ```
