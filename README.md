@@ -16,7 +16,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     $ docker run --name hashicorp-learn --detach --publish 8080:80 nginx:latest
     75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1
     ```
-1. Verify container is running by running `docker ps` or visiting `localhost:8080`.
+1. Verify container is running by running `docker ps` or visiting `0.0.0.0:8080`.
     ```shell
     $ $ docker ps --filter "name=hashicorp-learn"
     CONTAINER ID        IMAGE                                     COMMAND                  CREATED             STATUS              PORTS                     NAMES
@@ -30,9 +30,8 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     ```hcl
     resource "docker_container" "web" {}
     ```
-    **Note:** The resource name in this configuration does not have to match the other config; that name is internal to terraform.
 1. Run `docker ps` to identify the name of the container you want to import.
-    
+
     Notice that the [docs](https://www.terraform.io/docs/providers/docker/r/container.html) show how to import the container resource, and requires that we know the full image id/sha. In this case, the `docker ps` output shows the short version of the sha, but we can look up the full sha using the name from the output of the `docker ps` command.
 1. Run the following command to import the container into Terraform state. `$(docker inspect -f {{.ID}} hashicorp-learn)` retrieves the container instance's full ID.
     ```shell
@@ -74,6 +73,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     ```shell
     $ terraform show -no-color > docker.tf
     ```
+    - Note: will replace the contents of docker.tf
 1. Re-run `terraform plan`. Terraform complains about read only arguments (`ip_address`, `network_data`, `gateway`, `ip_prefix_length`, `id`). Remove these properties from your configuration code.
 1. Re-run `terraform plan`. It should now execute successfully. The plan indicates that Terraform will update in place to add the `attach`, `logs`, `must_run`, and `start` attributes. Your container will **not** restart.
     ````shell
@@ -84,7 +84,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
 
     docker_container.web: Refreshing state... [id=75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1]
 
-    ## Output Truncated 
+    ## Output Truncated
 
     Plan: 0 to add, 1 to change, 0 to destroy.
 
@@ -104,17 +104,19 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     $ terraform apply
     docker_container.web: Refreshing state... [id=75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1]
 
-    ## Output Truncated 
+    ## Output Truncated
 
     Plan: 0 to add, 1 to change, 0 to destroy.
 
-    ## Output Truncated 
+    ## Output Truncated
 
     docker_container.web: Modifying... [id=75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1]
     docker_container.web: Modifications complete after 0s [id=75278f99c53a6b39e94127d2c25f7dee13f97a4af89c52d74bff9dc783b3cce1]
 
     Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
     ```
+
+### Re-run docker ps / visit web page
 
 ### Change container ports using Terraform
 1. In your `docker.tf` file, change the container's external port from `8080` to `8081`.
