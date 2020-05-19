@@ -28,7 +28,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     75278f99c53a        nginx:latest                              "nginx -g 'daemon of…"   5 seconds ago       Up 3 seconds        0.0.0.0:8080->80/tcp      hashicorp-learn
     ```
 
-### Import the container resource
+### Import container resource
 
 1. Initialize your workspace with `terraform init`.
 1. This directory contains a blank configuration, with just the docker provider configured in `main.tf`.
@@ -86,7 +86,7 @@ Follow along with the [Learn guide](https://learn.hashicorp.com/FIXME) at HashiC
     The argument "name" is required, but no definition was found.
     ```
 
-1. There are two approaches to solving this. Either "cherry pick" the required attributes from the output of `terraform show`, or accept entire current state from `terraform show` as your configuration. Either way, the process includes several manual steps.
+1. There are two approaches to solving this using the `terraform show` command. Either "cherry pick" the required attributes into your configuration, or accept the entire current state from `terraform show` as your configuration. Either way, the process includes several manual steps.
 
 #### Use existing state as configuration
 
