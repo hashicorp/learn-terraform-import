@@ -10,3 +10,7 @@ terraform {
   }
   required_version = ">= 0.14"
 }
+
+provider "docker" {
+  host    = "npipe:////.//pipe//docker_engine"
+}
