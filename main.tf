@@ -12,5 +12,6 @@ terraform {
 }
 
 provider "docker" {
+  # this setting is only needed on Windows; comment it for MacOS
   host    = "npipe:////.//pipe//docker_engine"
 }
