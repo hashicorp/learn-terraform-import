@@ -2,8 +2,7 @@
 
 Learn what Terraform import is and how to use it.
 
-Follow along with the [Learn Guide](https://learn.hashicorp.com/terraform/state/import) at
-HashiCorp Learn.
+Follow along with the [Learn Terraform Import tutorial](https://developer.hashicorp.com/terraform/tutorials/state/state-import).
 
 ### Install prerequisites
 
