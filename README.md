@@ -1,6 +1,6 @@
 ## Learn Terraform Import
 
-Learn what how to import existing resources under Terraform's management.
+Learn how to import existing resources under Terraform's management.
 
 Follow along with the [Learn Terraform Import tutorial](https://developer.hashicorp.com/terraform/tutorials/state/state-import).
 
